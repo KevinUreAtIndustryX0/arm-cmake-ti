@@ -13,8 +13,8 @@ set(TI_CGT_BIN_PATH ${TI_CGT_PATH}/bin/ CACHE INTERNAL "")
 
 # specify the cross compiler
 
-SET(CMAKE_C_COMPILER ${TI_CGT_BIN_PATH}armcl.exe)
-SET(CMAKE_ASM_COMPILER ${TI_CGT_BIN_PATH}armcl.exe)
+SET(CMAKE_C_COMPILER ${TI_CGT_BIN_PATH}armcl)
+SET(CMAKE_ASM_COMPILER ${TI_CGT_BIN_PATH}armcl)
 
 # skip compiler tests
 set(CMAKE_C_COMPILER_FORCED TRUE)
