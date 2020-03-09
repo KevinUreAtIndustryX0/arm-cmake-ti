@@ -69,9 +69,3 @@ add_custom_command(
     COMMAND arm-none-eabi-objcopy -I elf32-little -O binary blinky.out blinky.bin
     COMMENT "Converting blinky.out to blinky.bin"
 )
-add_custom_command(
-    TARGET blinky.out
-    POST_BUILD
-    COMMAND armhex -o blinky.hex blinky.out
-    COMMENT "Converting blinky.out to blinky.hex"
-)
