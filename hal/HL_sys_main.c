@@ -71,6 +71,7 @@ int main(void)
 {
 /* USER CODE BEGIN (3) */
     app_main();
+    while(1);
 /* USER CODE END */
 
     return 0;

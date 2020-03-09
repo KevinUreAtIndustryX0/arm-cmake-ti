@@ -46,5 +46,4 @@ void app_main(void){
     vTaskStartScheduler();
 
     /* Run forever */
-    while(1);
 }
