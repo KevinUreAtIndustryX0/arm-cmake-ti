@@ -30,6 +30,8 @@ project(yaboi LANGUAGES C ASM)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SafeTIDiagnosticLibrary/2.4.0)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/SafeTIDiagnosticLibrary/2.4.0/libs)
+# link_libraries(${TI_CGT_PATH}/lib/libc.a)
+link_libraries(-llibc.a)
 
 #######################################
 #   THIS BLOCK FINDS ALL TEST FILES   #
@@ -64,7 +66,26 @@ DISCOVER_ALL_ASM_SORUCE_FILES(ASM_SOURCES)
 message(STATUS "ALL DISCOVERED TEST FILES: ${ASM_SOURCES}")
 set_property(SOURCE PROPERTY LANGUAGE ASM ${ASM_SOURCES})
 
+MESSAGE( STATUS "Compile flags for C:         " ${CMAKE_C_FLAGS} )
+MESSAGE( STATUS "Compile flags for asm:       " ${CMAKE_ASM_FLAGS} )
+MESSAGE( STATUS "linker flags for asm:        " ${CMAKE_EXE_LINKER_FLAGS} )
+MESSAGE( STATUS "linker executable is         " ${CMAKE_C_LINK_EXECUTABLE} )
+MESSAGE( STATUS "here is the compiler you are using " ${CMAKE_C_COMPILER})
+
 add_executable( blinky.out ${C_SOURCES} ${ASM_SOURCES} )
-target_link_libraries(blinky.out ${TI_CGT_PATH}/lib/libc.a)
+# link_libraries(-llibc.a)
+# target_link_libraries(blinky.out ${TI_CGT_PATH}/lib/libc.a)
 set_target_properties(blinky.out PROPERTIES LINK_DEPENDS ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd)
 set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} " --run_linker ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd")
+add_custom_command(
+    TARGET blinky.out
+    POST_BUILD
+    COMMAND arm-none-eabi-objcopy -I elf32-little -O binary blinky.out blinky.bin
+    COMMENT "Converting blinky.out to blinky.bin"
+)
+add_custom_command(
+    TARGET blinky.out
+    POST_BUILD
+    COMMAND armhex -o blinky.hex blinky.out
+    COMMENT "Converting blinky.out to blinky.hex"
+)
