@@ -33,6 +33,8 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/SafeTIDiagnosticLibrary/2.4.0/libs)
 # link_libraries(${TI_CGT_PATH}/lib/libc.a)
 link_libraries(-llibc.a)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 #######################################
 #   THIS BLOCK FINDS ALL TEST FILES   #
 #######################################
@@ -73,10 +75,7 @@ MESSAGE( STATUS "linker executable is         " ${CMAKE_C_LINK_EXECUTABLE} )
 MESSAGE( STATUS "here is the compiler you are using " ${CMAKE_C_COMPILER})
 
 add_executable( blinky.out ${C_SOURCES} ${ASM_SOURCES} )
-# link_libraries(-llibc.a)
-# target_link_libraries(blinky.out ${TI_CGT_PATH}/lib/libc.a)
-set_target_properties(blinky.out PROPERTIES LINK_DEPENDS ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd)
-set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} " --run_linker ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd")
 add_custom_command(
     TARGET blinky.out
     POST_BUILD
