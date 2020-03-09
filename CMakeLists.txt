@@ -27,7 +27,7 @@
 
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(yaboi LANGUAGES C ASM)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/hal/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SafeTIDiagnosticLibrary/2.4.0)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/SafeTIDiagnosticLibrary/2.4.0/libs)
 # link_libraries(${TI_CGT_PATH}/lib/libc.a)
@@ -39,7 +39,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #   THIS BLOCK FINDS ALL TEST FILES   #
 #######################################
 MACRO(DISCOVER_ALL_C_SORUCE_FILES return_list)
-    FILE(GLOB_RECURSE new_list ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c)
+    FILE(GLOB_RECURSE new_list ${CMAKE_CURRENT_SOURCE_DIR}/hal/*.c)
     SET(file_list "")
     FOREACH(file_path ${new_list})
         string( REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/" "" relative_path ${file_path} )
@@ -55,7 +55,7 @@ message(STATUS "ALL DISCOVERED TEST FILES: ${C_SOURCES}")
 #   THIS BLOCK FINDS ALL TEST FILES   #
 #######################################
 MACRO(DISCOVER_ALL_ASM_SORUCE_FILES return_list)
-    FILE(GLOB_RECURSE new_list ${CMAKE_CURRENT_SOURCE_DIR}/source/*.asm)
+    FILE(GLOB_RECURSE new_list ${CMAKE_CURRENT_SOURCE_DIR}/hal/*.asm)
     SET(file_list "")
     FOREACH(file_path ${new_list})
         string( REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/" "" relative_path ${file_path} )
@@ -75,7 +75,7 @@ MESSAGE( STATUS "linker executable is         " ${CMAKE_C_LINK_EXECUTABLE} )
 MESSAGE( STATUS "here is the compiler you are using " ${CMAKE_C_COMPILER})
 
 add_executable( blinky.out ${C_SOURCES} ${ASM_SOURCES} )
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_SOURCE_DIR}/source/HL_sys_link.cmd")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_SOURCE_DIR}/hal/HL_sys_link.cmd")
 add_custom_command(
     TARGET blinky.out
     POST_BUILD
