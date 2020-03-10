@@ -32,18 +32,23 @@ void app_main(void){
     if (xTaskCreate(vTask1,"Task1", configMINIMAL_STACK_SIZE, NULL, 1, &xTask1Handle) != pdTRUE)
     {
         /* Task could not be created */
-        while(1);
+        block_main_thread_forever();
     }
 
     /* Create Task 2 */
     if (xTaskCreate(vTask2,"Task2", configMINIMAL_STACK_SIZE, NULL, 1, &xTask2Handle) != pdTRUE)
     {
         /* Task could not be created */
-        while(1);
+        block_main_thread_forever();
     }
 
     /* Start Scheduler */
     vTaskStartScheduler();
 
+    block_main_thread_forever();
     /* Run forever */
+}
+
+void block_main_thread_forever() {
+    while(1);
 }
