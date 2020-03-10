@@ -1,6 +1,7 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR
+
 verify=""
 restart="-r 0"
 while [[ "$#" -gt 0 ]]
@@ -15,30 +16,35 @@ do
     esac
     shift
 done
+
+plainCode="\e[0m"
+redCode="\e[31m"
+
 if [[ -z "$UNIFLASH_PATH" ]]
 then
-    echo 'UNIFLASH_PATH environment variable not set, aborting.'
+    printf "${redCode}UNIFLASH_PATH environment variable not set, aborting.${plainCode}\n"
     exit 1
 fi
 echo "Uniflash path: $UNIFLASH_PATH"
 if [[ ! -d ./build ]]
 then
-    echo "No build directory found, aborting."
+    printf "${redCode}No build directory found, aborting.${plainCode}\n"
     exit 1
 fi
 binfile=`find ./build -name "*.bin" -maxdepth 1 -type f`
 if [[ -z "$binfile"  ]]
 then
-    echo "No bin file found in build, aborting."
+    printf "${redCode}No bin file found in build, aborting..${plainCode}\n"
     exit 1
 fi
 echo "Found Bin File: $binfile"
 configfile=`find ./targetConfigs -name "*.ccxml" -maxdepth 1 -type f`
 if [[ -z "configfile" ]]
 then
-    echo "No target config ccxml found, aborting."
+    printf "${redCode}No target config ccxml found, aborting.${plainCode}\n"
     exit 1
 fi
 echo "Found Target Config File: $configfile"
-# do the thing
-${UNIFLASH_PATH}/dslite.sh --config=${configfile} ${verify} ${restart}
+
+echo "Flashing ${binfile} to device..."
+${UNIFLASH_PATH}/dslite.sh --config=${configfile} ${verify} ${restart} -f ${binfile}
