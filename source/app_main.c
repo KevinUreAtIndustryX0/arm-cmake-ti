@@ -50,6 +50,6 @@ void app_main(void){
     /* Run forever */
 }
 
-void block_main_thread_forever() {
+void MOCKABLE block_main_thread_forever() {
     while(1);
 }
