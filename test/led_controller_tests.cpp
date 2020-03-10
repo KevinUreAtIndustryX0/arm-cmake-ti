@@ -13,7 +13,7 @@ DEFINE_FAKE_VOID_FUNC(vTaskDelay, int);
 DEFINE_FAKE_VOID_FUNC(gioSetBit, gioPORT_t *, uint32, uint32);
 DEFINE_FAKE_VALUE_FUNC(uint32, gioGetBit, gioPORT_t *, uint32);
 DEFINE_FAKE_VOID_FUNC(gioInit);
-DEFINE_FAKE_VALUE_FUNC(BaseType_t, xTaskCreate, TaskFunction_t, const char* const, const uint16_t, void * const, UBaseType_t, TaskHandle_t * const);
+DEFINE_FAKE_VALUE_FUNC(BaseType_t, xTaskCreate, TaskFunction_t, char*, uint16_t, void *, UBaseType_t, TaskHandle_t *);
 DEFINE_FAKE_VOID_FUNC(vTaskStartScheduler);
 
 TEST(MyTestSuite, set_color_works_for_color){
