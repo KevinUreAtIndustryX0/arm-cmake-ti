@@ -21,7 +21,7 @@ void vTask2(void *pvParameters)
     for(;;)
     {
         gioSetBit(gioPORTB, 7, gioGetBit(gioPORTB, 7) ^ 1);
-        vTaskDelay(200);
+        vTaskDelay(500);
     }
 }
 

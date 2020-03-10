@@ -47,4 +47,4 @@ fi
 echo "Found Target Config File: $configfile"
 
 echo "Flashing ${binfile} to device..."
-${UNIFLASH_PATH}/dslite.sh --config=${configfile} ${verify} ${restart} -f ${binfile}
+${UNIFLASH_PATH}/dslite.sh --config=${configfile} ${verify} ${restart} -f "${binfile},0x0"
