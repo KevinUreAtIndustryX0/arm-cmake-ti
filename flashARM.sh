@@ -17,7 +17,7 @@ do
 done
 if [[ -z "$UNIFLASH_PATH" ]]
 then
-    echo '$UNIFLASH_PATH environment variable not set, aborting.'
+    echo 'UNIFLASH_PATH environment variable not set, aborting.'
     exit 1
 fi
 echo "Uniflash path: $UNIFLASH_PATH"
@@ -27,18 +27,18 @@ then
     exit 1
 fi
 binfile=`find ./build -name "*.bin" -maxdepth 1 -type f`
-if [[ -z binfile  ]]
+if [[ -z "$binfile"  ]]
 then
     echo "No bin file found in build, aborting."
     exit 1
 fi
 echo "Found Bin File: $binfile"
 configfile=`find ./targetConfigs -name "*.ccxml" -maxdepth 1 -type f`
-if [[ -z configfile ]]
+if [[ -z "configfile" ]]
 then
     echo "No target config ccxml found, aborting."
     exit 1
 fi
-echo "Found Bin File: $configfile"
+echo "Found Target Config File: $configfile"
 # do the thing
 ${UNIFLASH_PATH}/dslite.sh --config=${configfile} ${verify} ${restart}
