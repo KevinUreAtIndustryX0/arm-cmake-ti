@@ -1,7 +1,6 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR
-echo "I AM AT: $(pwd)"
 clean=false
 while [[ "$#" -gt 0 ]]
 do
@@ -12,7 +11,6 @@ do
     esac
     shift
 done
-ls -al
 touch ./CMakeLists.txt
 mkdir -p build
 if [ "$clean" = true ]
