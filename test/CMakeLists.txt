@@ -16,6 +16,7 @@ cmake_minimum_required(VERSION 3.5)
 project(hello-world-tests LANGUAGES C CXX)
 set(LIB_NAME ourSampleApp)
 
+add_compile_definitions(TESTING)
 
 # configure_file(CmakeConfig.h.in CmakeConfig.h)
 

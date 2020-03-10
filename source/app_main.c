@@ -2,6 +2,7 @@
 #include "FreeRTOS.h"
 #include "os_task.h"
 #include "HL_gio.h"
+#include "common.h"
 
 xTaskHandle xTask1Handle;
 xTaskHandle xTask2Handle;
@@ -32,20 +33,20 @@ void app_main(void){
     if (xTaskCreate(vTask1,"Task1", configMINIMAL_STACK_SIZE, NULL, 1, &xTask1Handle) != pdTRUE)
     {
         /* Task could not be created */
-        block_main_thread_forever();
+        return;
     }
 
     /* Create Task 2 */
     if (xTaskCreate(vTask2,"Task2", configMINIMAL_STACK_SIZE, NULL, 1, &xTask2Handle) != pdTRUE)
     {
         /* Task could not be created */
-        block_main_thread_forever();
+        return;
     }
 
     /* Start Scheduler */
     vTaskStartScheduler();
 
-    block_main_thread_forever();
+    return;
     /* Run forever */
 }
 

@@ -71,6 +71,7 @@ int main(void)
 {
 /* USER CODE BEGIN (3) */
     app_main();
+    block_main_thread_forever();
 /* USER CODE END */
 
     return 0;
