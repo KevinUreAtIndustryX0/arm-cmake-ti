@@ -7,6 +7,9 @@ extern "C" {
 }
 #include "fff.h"
 
+#define task_success 1
+#define task_failure 0
+
 DEFINE_FFF_GLOBALS;
 DEFINE_FAKE_VOID_FUNC(vTaskDelay, int);
 DEFINE_FAKE_VOID_FUNC(gioSetBit, gioPORT_t *, uint32, uint32);
@@ -16,9 +19,7 @@ DEFINE_FAKE_VALUE_FUNC(BaseType_t, xTaskCreate, TaskFunction_t, char*, uint16_t,
 DEFINE_FAKE_VOID_FUNC(vTaskStartScheduler);
 
 class AppTestFixture : public testing::Test {
-    void SetUp() override{
-
-    }
+    void SetUp() override{ }
 
     void TearDown() override{
         RESET_FAKE(vTaskDelay);
@@ -31,19 +32,17 @@ class AppTestFixture : public testing::Test {
 };
 
 TEST_F(AppTestFixture, calls_start_scheduler_if_tasks_created_successfully){
-    xTaskCreate_fake.return_val = 1;
+    xTaskCreate_fake.return_val = task_success;
 
     app_main();
 
     EXPECT_EQ(vTaskStartScheduler_fake.call_count, 1);
 }
 
-
 TEST_F(AppTestFixture, does_not_call_start_scheduler_if_tasks_did_not_create){
-    xTaskCreate_fake.return_val = 0;
+    xTaskCreate_fake.return_val = task_failure;
 
     app_main();
 
     EXPECT_EQ(vTaskStartScheduler_fake.call_count, 0);
 }
-
